@@ -46,4 +46,5 @@ val AppModule = module {
         UserRemoteDataSource(get())
     }
     viewModel { UserViewModel(get()) }
+    viewModel { LoginViewModel(get()) }
 }

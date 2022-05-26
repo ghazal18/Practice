@@ -16,4 +16,5 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
             userLiveData.value = user
         }
     }
+
 }
