@@ -1,4 +1,4 @@
-package com.example.myapplication.di
+package com.example.myapplication.ui
 
 import com.example.myapplication.data.UserLocalDataSource
 import com.example.myapplication.data.UserRemoteDataSource
@@ -7,6 +7,9 @@ import com.example.myapplication.network.ApiService
 import com.example.myapplication.ui.UserViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.OkHttp
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -18,14 +21,18 @@ val AppModule = module {
         val retrofitService: ApiService by lazy { retrofit.create(ApiService::class.java) }
         retrofitService
     }
+
     single {
+        val logger= HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
+     //   val client = OkHttpClient.Builder().addInterceptor(logger).build()
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://api.themoviedb.org/3/")
+        //    .client(client)
+            .baseUrl("http://6086fa75a3b9c200173b758e.mockapi.io/api/v1/")
             .build()
         retrofit
     }
